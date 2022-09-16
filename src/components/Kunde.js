@@ -14,8 +14,9 @@ const Kundeninfo = (props) => {
 
     const [name, setName] = useState(props.name);
 
-    const [checked, setChecked] = useState(props.bezahlt); // Bezahlt / Nicht Bezahlt
+    const [abos, setAbos] = useState(props.abos);
 
+    const [checked, setChecked] = useState(props.bezahlt); // Bezahlt / Nicht Bezahlt
 
     // const [deleteShow, setDeleteShow] = useState(false);
     // const handleDeleteClose = () => setDeleteShow(false);
@@ -23,6 +24,10 @@ const Kundeninfo = (props) => {
 
     const saveCustomerName = () => {
         props.customerChangeName(props.id, name)
+    }
+
+    const saveCustomerAbos = () => {
+        props.customerChangeAbos(props.id, abos)
     }
 
     // const deleteButtonClicked = () => {
@@ -40,6 +45,7 @@ const Kundeninfo = (props) => {
         //it triggers by pressing the enter key
         if (e.charCode === 13) {
             saveCustomerName();
+            saveCustomerAbos();
         }
     };
 
@@ -52,24 +58,40 @@ const Kundeninfo = (props) => {
                         value={name === "Neuer Kunde" ? "" : name}
                         placeholder="Max Mustermann"
                         onChange={e => setName(e.target.value)}
-                        // onBlur={saveCustomerName}
+                        onBlur={saveCustomerName}
                         onKeyPress={handleKeypress}
                         id={"nameInput_"+props.id}
                     />
                 </InputGroup.Prepend>
             </Col>
 
-            <Col sm={8}/>
+            <Col lg={2}>
+                <InputGroup.Prepend>
+                    <InputGroup.Text>Abo</InputGroup.Text>
+                    <FormControl
+                        style={{"width":"35%"}}
+                        value={abos}
+                        placeholder="0"
+                        type="number" 
+                        onChange={e => setAbos(e.target.value)}
+                        onBlur={saveCustomerAbos}
+                        onKeyPress={handleKeypress}
+                        id={"aboInput_"+props.id}
+                    />
+                </InputGroup.Prepend>
+            </Col>
 
-            <ButtonGroup toggle>
+            <Col sm={5}/>
+
+                <ButtonGroup toggle>
                     <ToggleButton 
-                    style={{"marginRight":"20px"}}
-                    size="lg"
-                    type="checkbox"
-                    variant="info"
-                    checked={checked}
-                    value="1"
-                    onChange={(e) => handleBezahlt(e.currentTarget.checked)}
+                        style={{"marginRight":"20px"}}
+                        size="lg"
+                        type="checkbox"
+                        variant="info"
+                        checked={checked}
+                        value="1"
+                        onChange={(e) => handleBezahlt(e.currentTarget.checked)}
                     >
                         ↻ Bezahlt
                     </ToggleButton>
@@ -152,6 +174,13 @@ const Bestellung = (props) => {
         console.log("Server accepted")
     }
 
+    const handleKeypress = (e) => {
+        //it triggers by pressing the enter key
+        if (e.charCode === 13) {
+            saveButtonClicked(e)
+        }
+    };
+
 
     return (
         
@@ -163,7 +192,8 @@ const Bestellung = (props) => {
                     <Form.Row>
                         <Form.Label><h5>Abholung:</h5></Form.Label>
                         <Col lg={6}>
-                            <Form.Control as="select" value={(abholung === 1) ? props.bezErsterTag : props.bezZweiterTag} onChange={e => setAbholungHanlder(e.target.value)}>
+                            <Form.Control as="select" value={(abholung === 1) ? props.bezErsterTag : props.bezZweiterTag} onChange={e => setAbholungHanlder(e.target.value)} 
+                            onBlur={e => saveButtonClicked(e)}>
                                 <option >{props.bezErsterTag}</option>
                                 <option >{props.bezZweiterTag}</option>
                             </Form.Control>
@@ -173,21 +203,24 @@ const Bestellung = (props) => {
                 <Col  lg={10} style={{"paddingTop": "8px"}}>
                     <Form.Row>
                         <Col lg={1} style={{"marginLeft": "0px"}}>
-                            <Form.Control style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}} xs={2} type="number" step="1" value={ganze} onChange={e => setGanze(e.target.value)}/>
+                            <Form.Control style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}} xs={2} type="number" step="1" value={ganze} onChange={e => setGanze(e.target.value)} 
+                            onBlur={e => saveButtonClicked(e)} onKeyPress={handleKeypress}/>
                         </Col>
                         <Form.Label lg={2} style={{"paddingTop": "0px"}}>
                             <img src={chicken_full} alt="Ganze" width="40"></img>
                         </Form.Label>
 
                         <Col lg={1} style={{"marginLeft": "0px"}}>
-                            <Form.Control style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}}  xs={2} size="xs" type="number" step="0.5" value={halbe} onChange={e => setHalbe(e.target.value)}/>
+                            <Form.Control style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}}  xs={2} size="xs" type="number" step="0.5" value={halbe} onChange={e => setHalbe(e.target.value)}  
+                            onBlur={e => saveButtonClicked(e)} onKeyPress={handleKeypress}/>
                         </Col>
                         <Form.Label lg={2} style={{"paddingTop": "0px"}}>
                             <img src={chicken_half} alt="Halbe" width="40"></img>
                         </Form.Label>
 
                         <Col lg={1} style={{"marginLeft": "0px"}} >
-                            <Form.Control style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}} xs={2} size="xs" type="number" step="0.5" value={viertel} onChange={e => setViertel(e.target.value)} />
+                            <Form.Control style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}} xs={2} size="xs" type="number" step="0.5" value={viertel} onChange={e => setViertel(e.target.value)}  
+                            onBlur={e => saveButtonClicked(e)} onKeyPress={handleKeypress}/>
                         </Col>
                         <Form.Label lg={2} xs={2} style={{"paddingTop": "0px"}}>
                             <img src={chicken_quart} alt="Viertel" width="40"></img>
@@ -195,7 +228,8 @@ const Bestellung = (props) => {
                         <Form.Label style={{"marginLeft":"50px"}}><h5>Innereien:</h5></Form.Label>
                         
                         <Col lg={1} style={{"paddingRight": "40px"}}>
-                            <Form.Control type="number" xs={2} step="1" value={innereien} onChange={e => setInnereien(e.target.value)} style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}} />
+                            <Form.Control type="number" xs={2} step="1" value={innereien} onChange={e => setInnereien(e.target.value)} style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}}  
+                            onBlur={e => saveButtonClicked(e)} onKeyPress={handleKeypress}/>
                         </Col>
                         
                         <Col lg={4}>
@@ -203,11 +237,13 @@ const Bestellung = (props) => {
                             value={notiz.length > 1 ? notiz : undefined}
                             placeholder={notiz.length > 1 ? undefined : "Notiz eintragen"}
                             // placeholder={(props.notiz && props.notiz.length > 1) ? props.notiz : "Notiz eintragen" } 
-                            onChange={e => setNotiz(e.target.value)}/>
+                            onBlur={e => saveButtonClicked(e)}
+                            onChange={e => setNotiz(e.target.value)}
+                            />
                         </Col>
-                       <Col lg={1}>
+                       {/* <Col lg={1}>
                             <Button type="submit" className="float-right" onClick={saveButtonClicked}>Speichern</Button>
-                        </Col>
+                        </Col> */}
 
                     </Form.Row>
                 </Col>
@@ -496,6 +532,7 @@ const Kunde = (props) => {
                 <Row>
                     <Col lg={2}>
                         <h4><span>{props.name} ({(parseFloat(props.ganze)+parseFloat(props.halbe)+parseFloat(props.viertel))})</span></h4>
+                        {props.abos > 0 ? <h6>Abo: {props.abos}</h6> : null}
                     </Col>
                     <Col lg={1}>
                         <p>Abholung:</p><p> <span style={{"fontWeight": "bold"}}>{tagesString}</span></p>

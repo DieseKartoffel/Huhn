@@ -15,7 +15,6 @@ class Huhn extends Component {
         this.state = {
             "neusteKundenId":null,
 
-
             "aktivePeriode":"",
             "perioden":[],
             "showZsmfassung":false,
@@ -169,6 +168,18 @@ class Huhn extends Component {
 
     }
 
+    customerChangeAbos = (kundenID, abos) => {
+        this.setState((prevState) => {
+
+            prevState["kunden"][kundenID]["abos"]=abos
+
+            return prevState
+        }, () => {
+            this.updateCustomerInDB(kundenID)
+         })
+
+    }
+
     customerAddNew = () => {
 
         const self = this
@@ -185,6 +196,7 @@ class Huhn extends Component {
                     {
                         "id":newID,
                         "name":"Neuer Kunde",
+                        "abos":5,
                         "ganze":0,
                         "halbe":0,
                         "viertel":0,
@@ -334,6 +346,7 @@ class Huhn extends Component {
                     customerZeileRemoved={this.customerZeileRemoved}
                     customerBezahlt={this.customerBezahlt}
                     customerChangeName={this.customerChangeName}
+                    customerChangeAbos={this.customerChangeAbos}
                     customerAddNew={this.customerAddNew}
                     customerDelete={this.customerDelete}
                 />

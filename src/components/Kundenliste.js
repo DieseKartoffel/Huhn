@@ -45,6 +45,7 @@ const Kundenliste = (props) => {
             (<Kunde
                 key = {kundenObj.id}
                 id = {kundenObj.id}
+                abos = {kundenObj.abos}
                 neusteKundenId = {props.neusteKundenId}
                 name={kundenObj.name}
                 viertel={kundenObj.viertel} 
@@ -63,6 +64,7 @@ const Kundenliste = (props) => {
                 customerZeileRemoved={props.customerZeileRemoved}
                 customerBezahlt={props.customerBezahlt}
                 customerChangeName={props.customerChangeName}
+                customerChangeAbos={props.customerChangeAbos}
                 customerDelete={props.customerDelete}
                 kilopreis={props.kilopreis}
                 bezErsterTag={props.bezErsterTag}
