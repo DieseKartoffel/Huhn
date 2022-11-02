@@ -227,8 +227,8 @@ const Bestellung = (props) => {
                         </Form.Label>
                         <Form.Label style={{"marginLeft":"50px"}}><h5>Innereien:</h5></Form.Label>
                         
-                        <Col lg={1} style={{"paddingRight": "40px"}}>
-                            <Form.Control type="number" xs={2} step="1" value={innereien} onChange={e => setInnereien(e.target.value)} style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}}  
+                        <Col lg={1} style={{"paddingRight": "15px"}}>
+                            <Form.Control type="number" xs={3} step="1" value={innereien} onChange={e => setInnereien(e.target.value)} style={{"WebkitAppearance": "none", "margin":"0", "MozAppearance":"textfield"}}  
                             onBlur={e => saveButtonClicked(e)} onKeyPress={handleKeypress}/>
                         </Col>
                         
@@ -373,7 +373,7 @@ const Verkauf = (props) => {
     }
 
     const handleNeueZeile = (e) => {
-        console.log(e)
+        // console.log(e)
 
         let doPrint = e
 
@@ -513,6 +513,7 @@ const Kunde = (props) => {
 
     // If the row that was just created is a new one, open it with onclick simulation
     useEffect(() => {
+        console.log(props)
         if (props.id === props.neusteKundenId && props.name === "Neuer Kunde"){
             const element = document.querySelector("div[id='"+props.id+"']");
             if (element){
@@ -520,6 +521,7 @@ const Kunde = (props) => {
                 setTimeout(() => {
                     const input = document.getElementById("nameInput_"+props.id)
                     input.focus()
+                    // TODO: Set neueste KundenID to None after opening once.
                 }, 300);
             }   
         }

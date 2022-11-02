@@ -196,7 +196,7 @@ class Huhn extends Component {
                     {
                         "id":newID,
                         "name":"Neuer Kunde",
-                        "abos":5,
+                        "abos":0,
                         "ganze":0,
                         "halbe":0,
                         "viertel":0,
@@ -260,7 +260,7 @@ class Huhn extends Component {
         const self = this
         axios.post('http://127.0.0.1:5000/get-full-period', {"periodName":periode})
         .then(function (response) {
-            console.log(response)
+            // console.log(response)
             self.setState(response.data)
             self.setState({"aktivePeriode":periode})
         })
@@ -295,10 +295,23 @@ class Huhn extends Component {
         this.setState({"showZsmfassung": !this.state.showZsmfassung })
     }
 
-
-
-
-
+    exportCSV = () => {
+        let csv_rows = ["name,abos,abholung,ganze,halbe,viertel,innereien,gewicht,summe,bezahlt,notiz"]
+        Object.keys(this.state.kunden).forEach(k => {
+            const kundenObj = this.state.kunden[k]
+            csv_rows.push( `${kundenObj["name"]},${kundenObj["abos"]},${kundenObj["abholung"]},${kundenObj["ganze"]},${kundenObj["halbe"]},${kundenObj["viertel"]},${kundenObj["innereien"]},${kundenObj["gewicht"]} ,${kundenObj["summe"]} ,${kundenObj["bezahlt"]} ,${kundenObj["notiz"]}`)
+        })
+        csv_rows.push("")
+        csv_rows.push(`kilopreis,${this.state.kilopreis}`)
+        let csv = csv_rows.join("\n")
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+        element.setAttribute('download', this.state.aktivePeriode + ".csv");
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
 
 
     render(){
@@ -312,6 +325,7 @@ class Huhn extends Component {
                     sucheingabe={this.state.sucheingabe}
                     tagesFilter={this.state.tagesFilter}
                     bezahltFilter={this.state.bezahltFilter}/>
+                
                 <Navbar
                     perioden = {this.state.perioden}
                     aktivePeriode = {this.state.aktivePeriode}
@@ -326,7 +340,6 @@ class Huhn extends Component {
                     zusammenfassungHandle = {this.zusammenfassungHandle}
                     newPeriodCreate={this.newPeriodCreate}
                 />
-                
                 
                 <Kundenübersicht 
                     kunden={this.state.kunden}
@@ -349,6 +362,8 @@ class Huhn extends Component {
                     customerChangeAbos={this.customerChangeAbos}
                     customerAddNew={this.customerAddNew}
                     customerDelete={this.customerDelete}
+
+                    exportCSV={this.exportCSV}
                 />
             </Container>
         );

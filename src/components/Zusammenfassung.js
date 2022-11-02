@@ -22,7 +22,7 @@ const zusammenfassung = (props) => {
     Object.keys(props.kunden).forEach(k => {
         const kundenObj = props.kunden[k]
 
-        console.log(kundenObj)
+        // console.log(kundenObj)
 
         if (props.sucheingabe !== "" && !props.kunden[k].name.toLowerCase().includes(props.sucheingabe.toLowerCase())){
             return // same as continue
@@ -109,7 +109,13 @@ const zusammenfassung = (props) => {
                                     <h5>• {innereien} Innereien</h5>
                                 </Col>
                             </Row>
-                            <Row style={{"padding-top":"15px"}}>
+                            {/* <Row>
+                                <Col sm={1}></Col>
+                                <Col>
+                                    <h4>Ø  {((ganze + halbe + viertel) / numKunden).toFixed(2)} Hähnchen pro Kunde</h4>
+                                </Col>
+                            </Row> */}
+                            <Row style={{"paddinTop":"15px"}}>
                                 <Col>
                                     <h4>{(gewicht / 1000).toFixed(2)}kg bisher abgewogen</h4>
                                 </Col>
@@ -117,7 +123,7 @@ const zusammenfassung = (props) => {
                             <Row>
                                 <Col></Col>
                             </Row>
-                            <Row>
+                            {/* <Row>
                                 <Col sm={1}/>
                                 <Col>
                                     <h4>Ø { ( gewicht/1000 / (ganze + halbe + viertel)).toFixed(2) } kg pro Hähnchen </h4>
@@ -128,20 +134,14 @@ const zusammenfassung = (props) => {
                                 <Col>
                                     <h4>Ø { ( gewicht/1000 / numKunden).toFixed(2) } kg pro Kunde </h4>
                                 </Col>
-                            </Row>
-                            <Row>
-                                <Col sm={1}></Col>
-                                <Col>
-                                    <h4>Ø  {((ganze + halbe + viertel) / numKunden).toFixed(2)} Hähnchen pro Kunde</h4>
-                                </Col>
-                            </Row>
+                            </Row>*/}
                             <Row>
                                 <Col sm={8}/>
                                 <Col>
                                     <h5>Umsatz abgewogen: {((gewicht / 1000) * props.kilopreis).toFixed(2)}€</h5>
                                 </Col>
-                            </Row>
-                            <Row style={{"padding-top":"15px"}}>
+                            </Row> 
+                            <Row style={{"paddingTop":"15px"}}>
                                 <Col>
                                     <h4>{(bezahlt_gewicht / 1000).toFixed(2)}kg bisher bisher bezahlt</h4>
                                 </Col>
@@ -149,7 +149,7 @@ const zusammenfassung = (props) => {
                             <Row>
                                 <Col></Col>
                             </Row>
-                            <Row>
+                            {/* <Row>
                                 <Col sm={1}/>
                                 <Col>
                                     <h4>Ø { ( bezahlt_gewicht/1000 / (bezahlt_ganze + bezahlt_halbe + bezahlt_viertel)).toFixed(2) } kg pro Hähnchen </h4>
@@ -166,7 +166,7 @@ const zusammenfassung = (props) => {
                                 <Col>
                                     <h4>Ø  {((bezahlt_ganze + bezahlt_halbe + bezahlt_viertel) / bezahlt_numKunden).toFixed(2)} Hähnchen pro Kunde</h4>
                                 </Col>
-                            </Row>
+                            </Row> */}
                             <Row>
                                 <Col sm={8}/>
                                 <Col>

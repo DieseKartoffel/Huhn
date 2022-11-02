@@ -33,12 +33,12 @@ const Kundenliste = (props) => {
 
     });
 
-    console.log(kundenObjekte)
+    // console.log(kundenObjekte)
     //Order Kunden
     kundenObjekte.sort(function(a, b){
         return (parseInt(a.id.replace("kunde","")) - parseInt(b.id.replace("kunde","")))
     });   
-    console.log(kundenObjekte)
+    // console.log(kundenObjekte)
 
     kundenObjekte.forEach((kundenObj) => {
         kundenListe.push(
@@ -86,7 +86,11 @@ const Kundenliste = (props) => {
                     </Accordion.Toggle>
                 </Card.Header>
             </Card>
+            <div style={{"textAlign": "center", "padding":"20px"}}>
+                        <Button variant="primary" onClick={props.exportCSV}>Periode als CSV exportieren</Button>{' '}
+            </div>
         </Accordion>
+
     )
 }
 
@@ -97,6 +101,7 @@ const kundenübersicht = (props) => {
     <div>
         <Kundenliste {... props}/>
     </div>
+
   );
 }
 
