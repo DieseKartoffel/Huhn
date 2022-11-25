@@ -9,6 +9,16 @@ import sqlite3
 
 
 app = Flask(__name__)
+
+# dir of the server
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    application_path = os.path.dirname(sys.executable)
+elif __file__:
+    application_path = os.path.dirname(__file__)
+# static folder must exist in the dir
+app._static_folder = os.path.join(application_path, "static")
+print(app._static_folder)
 CORS(app) # will allow cross origin access headers
 
 @app.route("/available-periods", methods = ['GET', 'POST'])
