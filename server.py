@@ -54,7 +54,7 @@ def new_period():
     
     c = conn.cursor()
     c.execute('INSERT INTO allgemein (kilopreis, ersterTag, zweiterTag) VALUES (?, ? ,?)',
-               (7.5, "Erster Tag", "Zweiter Tag") )
+               (10, "Erster Tag", "Zweiter Tag") )
 
     conn.commit()
     conn.close()
