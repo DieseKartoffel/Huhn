@@ -21,6 +21,7 @@ const zusammenfassung = (props) => {
     let bezahlt_innereien = 0
     let bezahlt_gewicht = 0
     let bezahlt_numKunden = 0
+    let anzahl_bestellungen_bezahlt = 0
 
     Object.keys(props.kunden).forEach(k => {
         const kundenObj = props.kunden[k]
@@ -69,6 +70,7 @@ const zusammenfassung = (props) => {
                 });
             }
             bezahlt_gewicht = bezahlt_gewicht + bezahlt_kundengewicht
+            anzahl_bestellungen_bezahlt = anzahl_bestellungen_bezahlt + kundenObj.ganze + kundenObj.halbe + kundenObj.viertel
         }
 
     })
@@ -82,7 +84,7 @@ const zusammenfassung = (props) => {
                         <div>
                             <Row>
                                 <Col>
-                                    <h4> {ganze + halbe + viertel} bestellte Hähnchen</h4>
+                                    <h4> {ganze + halbe + viertel} bestellte Hähnchen ({numAbos.toFixed(2)} Abos)</h4>
                                 </Col>
                             </Row>
                             <Row>
@@ -121,16 +123,11 @@ const zusammenfassung = (props) => {
                                     <h4> {numKunden} Kunden ( {bezahlt_numKunden}✓  {numKunden - bezahlt_numKunden}✗ )</h4>
                                 </Col>
                             </Row>
-                            <Row>
-                                <Col>
-                                    <h4> {numAbos.toFixed(2)} Abos</h4>
-                                </Col>
-                            </Row>
-                            
+                                
                             <Row style={{"paddingTop":"35px"}}>
                                 <Col>
-                                    <h4>{(gewicht / 1000).toFixed(2)}kg bisher abgewogen ({numGewogen} Rechnungen) </h4>
-                                    <h4>{(gewicht / 1000 / numGewogen).toFixed(2)}kg Durchschnittsgewicht</h4>
+                                    <h4>{(gewicht / 1000).toFixed(2)}kg bisher abgewogen ({numGewogen} Wiegungen) </h4>
+                                    <h4>{(bezahlt_gewicht / 1000 / anzahl_bestellungen_bezahlt).toFixed(2)}kg Durchschnittsgewicht</h4>
                                 </Col>
                             </Row>
                             <Row>
