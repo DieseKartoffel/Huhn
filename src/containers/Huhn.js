@@ -299,7 +299,7 @@ class Huhn extends Component {
         let csv_rows = ["name;abos;abholung;ganze;halbe;viertel;innereien;gewicht;summe;bezahlt;notiz"]
         Object.keys(this.state.kunden).forEach(k => {
             const kundenObj = this.state.kunden[k]
-            csv_rows.push( `${kundenObj["name"]};${kundenObj["abos"]};${kundenObj["abholung"]};${kundenObj["ganze"]};${kundenObj["halbe"]};${kundenObj["viertel"]};${kundenObj["innereien"]};${kundenObj["gewicht"]} ;${kundenObj["summe"]} ;${kundenObj["bezahlt"]} ;${kundenObj["notiz"]}`)
+            csv_rows.push( `${kundenObj["name"]};${kundenObj["abos"]};${kundenObj["abholung"]};${kundenObj["ganze"]};${kundenObj["halbe"]};${kundenObj["viertel"]};${kundenObj["innereien"]};${kundenObj["gewicht"]} ;${kundenObj["gewicht"]/1000*this.state.kilopreis} ;${kundenObj["bezahlt"]} ;${kundenObj["notiz"]}`)
         })
         csv_rows.push("")
         csv_rows.push(`kilopreis;${this.state.kilopreis}`)
