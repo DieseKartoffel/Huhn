@@ -296,13 +296,13 @@ class Huhn extends Component {
     }
 
     exportCSV = () => {
-        let csv_rows = ["name,abos,abholung,ganze,halbe,viertel,innereien,gewicht,summe,bezahlt,notiz"]
+        let csv_rows = ["name;abos;abholung;ganze;halbe;viertel;innereien;gewicht;summe;bezahlt;notiz"]
         Object.keys(this.state.kunden).forEach(k => {
             const kundenObj = this.state.kunden[k]
-            csv_rows.push( `${kundenObj["name"]},${kundenObj["abos"]},${kundenObj["abholung"]},${kundenObj["ganze"]},${kundenObj["halbe"]},${kundenObj["viertel"]},${kundenObj["innereien"]},${kundenObj["gewicht"]} ,${kundenObj["summe"]} ,${kundenObj["bezahlt"]} ,${kundenObj["notiz"]}`)
+            csv_rows.push( `${kundenObj["name"]};${kundenObj["abos"]};${kundenObj["abholung"]};${kundenObj["ganze"]};${kundenObj["halbe"]};${kundenObj["viertel"]};${kundenObj["innereien"]};${kundenObj["gewicht"]} ;${kundenObj["summe"]} ;${kundenObj["bezahlt"]} ;${kundenObj["notiz"]}`)
         })
         csv_rows.push("")
-        csv_rows.push(`kilopreis,${this.state.kilopreis}`)
+        csv_rows.push(`kilopreis;${this.state.kilopreis}`)
         let csv = csv_rows.join("\n")
         let element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
