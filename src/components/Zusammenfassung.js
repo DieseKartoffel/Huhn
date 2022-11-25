@@ -11,6 +11,9 @@ const zusammenfassung = (props) => {
     let innereien = 0
     let gewicht = 0
     let numKunden = 0
+    let numAbos = 0
+
+    let numGewogen = 0
 
     let bezahlt_ganze = 0
     let bezahlt_halbe = 0
@@ -22,7 +25,7 @@ const zusammenfassung = (props) => {
     Object.keys(props.kunden).forEach(k => {
         const kundenObj = props.kunden[k]
 
-        // console.log(kundenObj)
+        console.log(kundenObj)
 
         if (props.sucheingabe !== "" && !props.kunden[k].name.toLowerCase().includes(props.sucheingabe.toLowerCase())){
             return // same as continue
@@ -41,18 +44,20 @@ const zusammenfassung = (props) => {
         halbe = halbe + kundenObj.halbe
         viertel = viertel + kundenObj.viertel
         innereien = innereien + kundenObj.innereien
+        numAbos = numAbos + kundenObj.abos
 
         let kundengewicht = 0
+        let kundenzeilen = kundenObj.zeilen.length
         if (kundenObj.zeilen.length > 0) {
             kundengewicht = kundenObj.zeilen.reduce((a, b) => {
                 return a + b;
             });
         }
         gewicht = gewicht + kundengewicht
-
+        numGewogen = numGewogen + kundenzeilen
 
         if (kundenObj.bezahlt) {
-            bezahlt_numKunden = numKunden + 1
+            bezahlt_numKunden = bezahlt_numKunden + 1
             bezahlt_ganze = bezahlt_ganze + kundenObj.ganze
             bezahlt_halbe = bezahlt_halbe + kundenObj.halbe
             bezahlt_viertel = bezahlt_viertel + kundenObj.viertel
@@ -75,11 +80,6 @@ const zusammenfassung = (props) => {
                     </Modal.Header>
                     <Modal.Body>
                         <div>
-                            <Row>
-                                <Col>
-                                    <h4> {numKunden} Kunden</h4>
-                                </Col>
-                            </Row>
                             <Row>
                                 <Col>
                                     <h4> {ganze + halbe + viertel} bestellte Hähnchen</h4>
@@ -115,9 +115,22 @@ const zusammenfassung = (props) => {
                                     <h4>Ø  {((ganze + halbe + viertel) / numKunden).toFixed(2)} Hähnchen pro Kunde</h4>
                                 </Col>
                             </Row> */}
-                            <Row style={{"paddinTop":"15px"}}>
+
+                            <Row style={{"paddingTop":"35px"}}>
                                 <Col>
-                                    <h4>{(gewicht / 1000).toFixed(2)}kg bisher abgewogen</h4>
+                                    <h4> {numKunden} Kunden ( {bezahlt_numKunden}✓  {numKunden - bezahlt_numKunden}✗ )</h4>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <h4> {numAbos.toFixed(2)} Abos</h4>
+                                </Col>
+                            </Row>
+                            
+                            <Row style={{"paddingTop":"35px"}}>
+                                <Col>
+                                    <h4>{(gewicht / 1000).toFixed(2)}kg bisher abgewogen ({numGewogen} Rechnungen) </h4>
+                                    <h4>{(gewicht / 1000 / numGewogen).toFixed(2)}kg Durchschnittsgewicht</h4>
                                 </Col>
                             </Row>
                             <Row>
@@ -138,12 +151,12 @@ const zusammenfassung = (props) => {
                             <Row>
                                 <Col sm={8}/>
                                 <Col>
-                                    <h5>Umsatz abgewogen: {((gewicht / 1000) * props.kilopreis).toFixed(2)}€</h5>
+                                    <h5>Umsatz gewogen: {((gewicht / 1000) * props.kilopreis).toFixed(2)}€</h5>
                                 </Col>
                             </Row> 
                             <Row style={{"paddingTop":"15px"}}>
                                 <Col>
-                                    <h4>{(bezahlt_gewicht / 1000).toFixed(2)}kg bisher bisher bezahlt</h4>
+                                    <h4>{(bezahlt_gewicht / 1000).toFixed(2)}kg bisher bereits bezahlt</h4>
                                 </Col>
                             </Row>
                             <Row>

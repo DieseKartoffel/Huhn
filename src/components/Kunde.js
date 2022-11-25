@@ -14,7 +14,7 @@ const Kundeninfo = (props) => {
 
     const [name, setName] = useState(props.name);
 
-    const [abos, setAbos] = useState(props.abos);
+    const [abos, setAbos] = useState(parseFloat(props.abos));
 
     const [checked, setChecked] = useState(props.bezahlt); // Bezahlt / Nicht Bezahlt
 
@@ -27,7 +27,7 @@ const Kundeninfo = (props) => {
     }
 
     const saveCustomerAbos = () => {
-        props.customerChangeAbos(props.id, abos)
+        props.customerChangeAbos(props.id, parseFloat(abos))
     }
 
     // const deleteButtonClicked = () => {
