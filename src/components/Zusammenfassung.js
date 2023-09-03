@@ -84,7 +84,7 @@ const zusammenfassung = (props) => {
                         <div>
                             <Row>
                                 <Col>
-                                    <h4> {ganze + halbe + viertel} bestellte Hähnchen ({numAbos.toFixed(2)} Abos)</h4>
+                                    <h4> {ganze + halbe + viertel} bestellte Hähnchen ({parseInt(numAbos).toFixed(2)} Abos)</h4>
                                 </Col>
                             </Row>
                             <Row>
