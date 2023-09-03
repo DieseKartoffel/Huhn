@@ -99,7 +99,7 @@ def get_full_period():
 def create_customer():
     json_data = request.json
     period_name = json_data["periodName"]
-    new_customer = {"name": "Neuer Kunde", "ganze": 0, "halbe": 0, "viertel": 0, "innereien": 0, "abholung": 0, "notiz": "", "bezahlt": False, "zeilen": []}
+    new_customer = {"name": "Neuer Kunde", "abosDay1":0, "abosDay2":0, "abosDay3":0, "ganze": 0, "halbe": 0, "viertel": 0, "innereien": 0, "abholung": 0, "notiz": "", "bezahlt": False, "zeilen": []}
     if period_name == None or len(period_name) < 1:
         return "Bad/No period name given", 500 
 
@@ -136,6 +136,9 @@ def update_customer():
                (json.dumps(updated_customer),customer_id) )
     conn.commit()
     conn.close()
+
+    print(f"Updated ID {customer_id} with data")
+    print(json.dumps(updated_customer, indent=2))
 
     return "Customer updated", 200
 

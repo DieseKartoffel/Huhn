@@ -11,7 +11,10 @@ const zusammenfassung = (props) => {
     let innereien = 0
     let gewicht = 0
     let numKunden = 0
-    let numAbos = 0
+    let numAbosDay1 = 0
+    let numAbosDay2 = 0
+    let numAbosDay3 = 0
+
 
     let numGewogen = 0
 
@@ -26,7 +29,7 @@ const zusammenfassung = (props) => {
     Object.keys(props.kunden).forEach(k => {
         const kundenObj = props.kunden[k]
 
-        console.log(kundenObj)
+        // console.log(kundenObj)
 
         if (props.sucheingabe !== "" && !props.kunden[k].name.toLowerCase().includes(props.sucheingabe.toLowerCase())){
             return // same as continue
@@ -45,7 +48,10 @@ const zusammenfassung = (props) => {
         halbe = halbe + kundenObj.halbe
         viertel = viertel + kundenObj.viertel
         innereien = innereien + kundenObj.innereien
-        numAbos = numAbos + kundenObj.abos
+        numAbosDay1 = numAbosDay1 + kundenObj.abosDay1 
+        numAbosDay2 = numAbosDay2 + kundenObj.abosDay2
+        numAbosDay3 = numAbosDay3 + kundenObj.abosDay3
+
 
         let kundengewicht = 0
         let kundenzeilen = kundenObj.zeilen.length
@@ -84,7 +90,12 @@ const zusammenfassung = (props) => {
                         <div>
                             <Row>
                                 <Col>
-                                    <h4> {ganze + halbe + viertel} bestellte Hähnchen ({parseInt(numAbos).toFixed(2)} Abos)</h4>
+                                    <h4> {ganze + halbe + viertel} bestellte Hähnchen</h4>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <h4> Abos: {parseInt(numAbosDay1)} | {parseInt(numAbosDay2)} | {parseInt(numAbosDay3)}</h4>
                                 </Col>
                             </Row>
                             <Row>

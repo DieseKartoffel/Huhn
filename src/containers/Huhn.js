@@ -134,7 +134,6 @@ class Huhn extends Component {
     }
 
     customerZeileRemoved = (kundenID, zeilenIndex) => {
-        console.log("DEL ROW ", kundenID)
         this.setState((prevState) => {
             prevState["kunden"][kundenID]["zeilen"].splice(zeilenIndex, 1)
             let gewichtSum = prevState["kunden"][kundenID]["zeilen"].reduce((a, b) => a + b, 0)
@@ -164,20 +163,44 @@ class Huhn extends Component {
             return prevState
         }, () => {
             this.updateCustomerInDB(kundenID)
+
+            // Gather all elements with an ID that starts with "kunde"
+            const allKundeElements = document.querySelectorAll('[id^="kunde"]');
+
+            for (let i = 0; i < allKundeElements.length; i++) {
+                if (allKundeElements[i].id === kundenID && i > 0) {
+                    // Scroll to the previous element in the NodeList
+                    allKundeElements[i - 1].scrollIntoView({ behavior: "smooth" });
+                    break;
+                }
+            }
          })
 
     }
 
-    customerChangeAbos = (kundenID, abos) => {
+    customerChangeAbosDay1 = (kundenID, abosDay1) => {
         this.setState((prevState) => {
-
-            prevState["kunden"][kundenID]["abos"]=abos
-
+            prevState["kunden"][kundenID]["abosDay1"]=abosDay1 || 0
             return prevState
         }, () => {
             this.updateCustomerInDB(kundenID)
          })
-
+    }
+    customerChangeAbosDay2 = (kundenID, abosDay2) => {
+        this.setState((prevState) => {
+            prevState["kunden"][kundenID]["abosDay2"]=abosDay2 || 0
+            return prevState
+        }, () => {
+            this.updateCustomerInDB(kundenID)
+         })
+    }
+    customerChangeAbosDay3 = (kundenID, abosDay3) => {
+        this.setState((prevState) => {
+            prevState["kunden"][kundenID]["abosDay3"]=abosDay3 || 0
+            return prevState
+        }, () => {
+            this.updateCustomerInDB(kundenID)
+         })
     }
 
     customerAddNew = () => {
@@ -196,7 +219,9 @@ class Huhn extends Component {
                     {
                         "id":newID,
                         "name":"Neuer Kunde",
-                        "abos":0,
+                        "abosDay1":0,
+                        "abosDay2":0,
+                        "abosDay3":0,
                         "ganze":0,
                         "halbe":0,
                         "viertel":0,
@@ -260,7 +285,7 @@ class Huhn extends Component {
         const self = this
         axios.post('http://127.0.0.1:5000/get-full-period', {"periodName":periode})
         .then(function (response) {
-            // console.log(response)
+            console.log(response)
             self.setState(response.data)
             self.setState({"aktivePeriode":periode})
         })
@@ -278,7 +303,6 @@ class Huhn extends Component {
 
     filterTagHandle = (num) => {
         this.setState((prevState) => {
-            console.log(num)
             prevState["tagesFilter"] = num
             return prevState
         })
@@ -296,10 +320,10 @@ class Huhn extends Component {
     }
 
     exportCSV = () => {
-        let csv_rows = ["name;abos;abholung;ganze;halbe;viertel;innereien;gewicht;summe;bezahlt;notiz"]
+        let csv_rows = ["name;abosTag1;abosTag2;abosTag3;abholung;ganze;halbe;viertel;innereien;gewicht;summe;bezahlt;notiz"]
         Object.keys(this.state.kunden).forEach(k => {
             const kundenObj = this.state.kunden[k]
-            csv_rows.push( `${kundenObj["name"]};${kundenObj["abos"]};${kundenObj["abholung"]};${kundenObj["ganze"]};${kundenObj["halbe"]};${kundenObj["viertel"]};${kundenObj["innereien"]};${kundenObj["gewicht"]} ;${kundenObj["gewicht"]/1000*this.state.kilopreis} ;${kundenObj["bezahlt"]} ;${kundenObj["notiz"]}`)
+            csv_rows.push( `${kundenObj["name"]};${kundenObj["abosDay1"]};${kundenObj["abosDay2"]};${kundenObj["abosDay3"]};${kundenObj["abholung"]};${kundenObj["ganze"]};${kundenObj["halbe"]};${kundenObj["viertel"]};${kundenObj["innereien"]};${kundenObj["gewicht"]} ;${kundenObj["gewicht"]/1000*this.state.kilopreis} ;${kundenObj["bezahlt"]} ;${kundenObj["notiz"]}`)
         })
         csv_rows.push("")
         csv_rows.push(`kilopreis;${this.state.kilopreis}`)
@@ -359,7 +383,9 @@ class Huhn extends Component {
                     customerZeileRemoved={this.customerZeileRemoved}
                     customerBezahlt={this.customerBezahlt}
                     customerChangeName={this.customerChangeName}
-                    customerChangeAbos={this.customerChangeAbos}
+                    customerChangeAbosDay1={this.customerChangeAbosDay1}
+                    customerChangeAbosDay2={this.customerChangeAbosDay2}
+                    customerChangeAbosDay3={this.customerChangeAbosDay3}
                     customerAddNew={this.customerAddNew}
                     customerDelete={this.customerDelete}
 

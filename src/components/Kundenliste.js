@@ -15,6 +15,13 @@ const Kundenliste = (props) => {
 
         let kundenObj = props.kunden[k]
 
+        if ('abos' in kundenObj) { // support databses that used old "only single day abo -> move abos to day 1"
+            kundenObj.abosDay1 = kundenObj.abos;
+            kundenObj.abosDay2 = 0;
+            kundenObj.abosDay3 = 0;
+            delete kundenObj.abos;
+        }
+
         if (props.sucheingabe !== "" && !props.kunden[k].name.toLowerCase().includes(props.sucheingabe.toLowerCase())){
             return // same as continue
         }
@@ -29,15 +36,28 @@ const Kundenliste = (props) => {
             return
         }
 
+        if (props.bezahltFilter !== 0 && bezahltInt !== props.bezahltFilter){
+            return
+        }
+
         kundenObjekte.push(kundenObj)
 
     });
 
     // console.log(kundenObjekte)
     //Order Kunden
-    kundenObjekte.sort(function(a, b){
-        return (parseInt(a.id.replace("kunde","")) - parseInt(b.id.replace("kunde","")))
-    });   
+    // kundenObjekte.sort(function(a, b){
+    //     console.log(a, b)
+    //     return (parseInt(a.id.replace("kunde","")) - parseInt(b.id.replace("kunde","")))
+    // });   
+
+    kundenObjekte.sort((a, b) => {
+        if (a.name === "Neuer Kunde") return 1;  // Push "Neuer Kunde" to the end
+        if (b.name === "Neuer Kunde") return -1; // Pull other values before "Neuer Kunde"
+        return a.name.localeCompare(b.name);     // Regular comparison for other values
+    });
+    
+
     // console.log(kundenObjekte)
 
     kundenObjekte.forEach((kundenObj) => {
@@ -45,7 +65,9 @@ const Kundenliste = (props) => {
             (<Kunde
                 key = {kundenObj.id}
                 id = {kundenObj.id}
-                abos = {kundenObj.abos}
+                abosDay1 = {kundenObj.abosDay1 || 0}
+                abosDay2 = {kundenObj.abosDay2 || 0}
+                abosDay3 = {kundenObj.abosDay3 || 0}
                 neusteKundenId = {props.neusteKundenId}
                 name={kundenObj.name}
                 viertel={kundenObj.viertel} 
@@ -64,7 +86,11 @@ const Kundenliste = (props) => {
                 customerZeileRemoved={props.customerZeileRemoved}
                 customerBezahlt={props.customerBezahlt}
                 customerChangeName={props.customerChangeName}
-                customerChangeAbos={props.customerChangeAbos}
+                customerChangeAbosDay1={props.customerChangeAbosDay1}
+                customerChangeAbosDay2={props.customerChangeAbosDay2}
+
+                customerChangeAbosDay3={props.customerChangeAbosDay3}
+            
                 customerDelete={props.customerDelete}
                 kilopreis={props.kilopreis}
                 bezErsterTag={props.bezErsterTag}
