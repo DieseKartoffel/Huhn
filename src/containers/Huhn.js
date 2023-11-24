@@ -218,7 +218,7 @@ class Huhn extends Component {
                 prevState["kunden"][newID] = 
                     {
                         "id":newID,
-                        "name":"Neuer Kunde",
+                        "name":"",
                         "abosDay1":0,
                         "abosDay2":0,
                         "abosDay3":0,

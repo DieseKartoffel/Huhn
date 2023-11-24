@@ -52,8 +52,8 @@ const Kundenliste = (props) => {
     // });   
 
     kundenObjekte.sort((a, b) => {
-        if (a.name === "Neuer Kunde") return 1;  // Push "Neuer Kunde" to the end
-        if (b.name === "Neuer Kunde") return -1; // Pull other values before "Neuer Kunde"
+        if (a.name === "") return 1;  // Push "Neuer Kunde" to the end
+        if (b.name === "") return -1; // Pull other values before "Neuer Kunde"
         return a.name.localeCompare(b.name);     // Regular comparison for other values
     });
     

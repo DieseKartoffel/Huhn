@@ -75,7 +75,7 @@ const Kundeninfo = (props) => {
                 <InputGroup.Prepend>
                     <InputGroup.Text>Name</InputGroup.Text>
                     <FormControl
-                        value={name === "*Neuer Kunde" ? "" : name}
+                        value={name === "" ? "" : name}
                         placeholder="Max Mustermann"
                         onChange={e => setName(e.target.value)}
                         onBlur={saveCustomerName}
@@ -413,11 +413,8 @@ const Verkauf = (props) => {
     }
 
     const handleNeueZeile = (e) => {
-        // console.log(e)
-
+        console.log(e)
         let doPrint = e
-
-
         if (isNaN(grammInput)){
             alert("Du kannst hier Zahlen eingeben.")
             return
@@ -434,7 +431,12 @@ const Verkauf = (props) => {
 
     const handleKeypress = (e) => {
         //it triggers by pressing the enter key
-        if (e.charCode === 13) {
+    
+        // alert()
+
+        console.log(e)
+
+        if (e.key === "Enter") {
             handleNeueZeile(true);
         }
     };
@@ -554,7 +556,7 @@ const Kunde = (props) => {
     // If the row that was just created is a new one, open it with onclick simulation
     useEffect(() => {
         // console.log(props)
-        if (props.id === props.neusteKundenId && props.name === "Neuer Kunde"){
+        if (props.id === props.neusteKundenId && props.name === ""){
             const element = document.querySelector("div[id='"+props.id+"']");
             if (element){
                 simulateMouseClick(element);

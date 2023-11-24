@@ -44,8 +44,6 @@ const MyNavbar = (props) => {
 
   const clearSuchfilter = () => {
     suchfilterInput("")
-    console.log("REF")
-    console.log(suchfeld)
     suchfeld.current.value = ""
     suchfeld.current.focus()
 
@@ -65,8 +63,6 @@ const MyNavbar = (props) => {
   }
 
   const filterTagHandleInput = (e) => {
-    console.log("EVENT:"+e)
-    console.log(e)
     if (e.includes("Alle")){
       setTagDropdownTitle("Tage: Alle")
       props.filterTagHandle(0)
